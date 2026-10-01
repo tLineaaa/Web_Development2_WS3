@@ -1,12 +1,39 @@
-const express = require('express');
-const path = require('path');
-
 // ========================================
 // TODO: Task 1 - Create Express App
 // ========================================
-// Step 1: Create an Express application instance
+
+const express = require('express');
+const path = require('path');
+const app = express();
 
 const PORT = process.env.PORT || 3000;
+const PUBLIC_DIR = path.join(__dirname, 'public');
+
+app.use(express.static(PUBLIC_DIR));
+
+// with localhost:3000/test you see my message
+app.get("/test", (req, res) => {
+  res.send("Am I doing this right?");
+});
+
+// for index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// for about.html
+app.get('/about', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'about.html'));
+});
+
+// for contact.html
+app.get('/contact', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'contact.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
 
 // ========================================
 // TODO: Task 2 - Serve Static Files
@@ -14,7 +41,14 @@ const PORT = process.env.PORT || 3000;
 // Configure Express to serve static files from the 'public' directory
 // This middleware automatically serves HTML, CSS, images, etc.
 // Hint: This single line replaces all the file reading logic from Workshop 02!
+// mime type
+const MIME_TYPES = mime.getType(path);
 
+// Jatka tästä yllä oleva on getType, alla lookup - onko alla ylimääräistä/ voiko lyhentää
+if (!res.getHeader('content-type')) {
+  var charset = mime.charsets.lookup(type);
+  res.setHeader('Content-Type', type + (charset ? '; charset=' + charset : ''));
+}
 
 // ========================================
 // BONUS: Custom Request Logging Middleware
