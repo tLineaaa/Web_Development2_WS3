@@ -1,7 +1,8 @@
 // ========================================
-// TODO: Task 1 - Create Express App
+// T1 - Created Express App
 // ========================================
 
+const { time } = require('console');
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -9,7 +10,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, 'public');
 
+// ========================================
+// T2 - Served Static Files
+// ========================================
 app.use(express.static(PUBLIC_DIR));
+
+// ========================================
+// T3 - Added Route Handlers
+// ========================================
 
 // with localhost:3000/test you see my message
 app.get("/test", (req, res) => {
@@ -35,21 +43,15 @@ app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
 
-// ========================================
-// TODO: Task 2 - Serve Static Files
-// ========================================
-// Configure Express to serve static files from the 'public' directory
-// This middleware automatically serves HTML, CSS, images, etc.
-// Hint: This single line replaces all the file reading logic from Workshop 02!
 // mime type
-const MIME_TYPES = mime.getType(path);
+/*const MIME_TYPES = mime.getType(path);
 
-// Jatka tästä yllä oleva on getType, alla lookup - onko alla ylimääräistä/ voiko lyhentää
+// Yllä oleva on getType, alla lookup - onko alla ylimääräistä/ voiko lyhentää
 if (!res.getHeader('content-type')) {
   var charset = mime.charsets.lookup(type);
   res.setHeader('Content-Type', type + (charset ? '; charset=' + charset : ''));
 }
-
+*/
 // ========================================
 // BONUS: Custom Request Logging Middleware
 // ========================================
@@ -61,35 +63,18 @@ app.use((req, res, next) => {
 });
 */
 
-
 // ========================================
-// TODO: Task 3 - Add Route Handlers
+// T4 - Created API Endpoint
 // ========================================
-// Create route handlers for the main pages
 
-// About home route
-// TODO: Create a GET route for '/'
-// Hint: serve 'index.html'
+app.get('/api/time', (req, res) => {
+  res.json({
+    datetime: new Date().toDateString(),
+    timestamp: new Date().toLocaleTimeString()
+});
+});
 
-
-// About page route
-// TODO: Create a GET route for '/about'
-// Hint: Similar to the home page route, but serve 'about.html'
-
-
-// Contact page route
-// TODO: Create a GET route for '/contact'
-// Hint: Similar to the home page route, but serve 'contact.html'
-
-
-// ========================================
-// TODO: Task 4 - Create API Endpoint
-// ========================================
-// Create a JSON API endpoint that returns current date/time
-
-// TODO: Create a GET route for '/api/time'
-// It should return JSON with 'datetime' and 'timestamp' properties
-// Hint: Use res.json() to send JSON response
+// All good so far
 
 // ========================================
 // BONUS: Task 6 - Express Router (Optional)
@@ -116,6 +101,7 @@ apiRouter.get('/info', (req, res) => {
 app.use('/api', apiRouter);
 */
 
+// !!! Jatka tästä !!!
 
 // ========================================
 // TODO: Task 5 - Error Handling Middleware
