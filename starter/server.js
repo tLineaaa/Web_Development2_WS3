@@ -2,7 +2,6 @@
 // T1 - Created Express App
 // ========================================
 
-const { time } = require('console');
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -19,10 +18,11 @@ app.use(express.static(PUBLIC_DIR));
 // T3 - Added Route Handlers
 // ========================================
 
-// with localhost:3000/test you see my message
-app.get("/test", (req, res) => {
+// With localhost:3000/test you see my message
+// Keeping this for future use
+/*app.get("/test", (req, res) => {
   res.send("Am I doing this right?");
-});
+}); */
 
 // for index.html
 app.get('/', (req, res) => {
@@ -39,15 +39,6 @@ app.get('/contact', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'contact.html'));
 });
 
-// mime type
-/*const MIME_TYPES = mime.getType(path);
-
-// Yllä oleva on getType, alla lookup - onko alla ylimääräistä/ voiko lyhentää
-if (!res.getHeader('content-type')) {
-  var charset = mime.charsets.lookup(type);
-  res.setHeader('Content-Type', type + (charset ? '; charset=' + charset : ''));
-}
-*/
 // ========================================
 // BONUS: Custom Request Logging Middleware
 // ========================================
@@ -66,7 +57,7 @@ app.use((req, res, next) => {
 app.get('/api/time', (req, res) => {
   res.json({
     datetime: new Date().toDateString(),
-    timestamp: new Date().toLocaleTimeString()
+    time: new Date().toLocaleTimeString()
 });
 });
 
